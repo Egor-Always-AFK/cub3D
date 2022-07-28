@@ -4,7 +4,7 @@ NAME_LIBFT = libft.a
 
 CC = gcc
 
-CFLAGS =  -c -framework OpenGL -framework AppKit
+CFLAGS =  -c 
 
 HEADER = cub3d.h 
 
@@ -42,7 +42,7 @@ all:  $(NAME)
 # 	ar rcs $(LIBFT_NAME) $(OBJS_LIBFT)
 
 $(NAME) : $(OBJS) $(HEADER)
-	$(CC) $(OBJS)  -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(OBJS) -o $(NAME)
 
 %.o : %.c $(HEADER)
 	$(CC)  -Imlx -c $< -o $@

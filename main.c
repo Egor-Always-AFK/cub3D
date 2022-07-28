@@ -12,6 +12,6 @@ int main(int argc, char **argv)
 		parser_for_text(&data, argv[1]);
 	}
 	else
-		error_message("NO!");
+		error_message("Error!");
 	return(0);
 }

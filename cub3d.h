@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <mlx.h>
+#include "minilibx/mlx.h"
 #include "libft/libft.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -39,7 +39,6 @@ typedef struct s_imgs
 	void *textures_south;
 	void *textures_west;
 	void *textures_east;
-	void *collect;
 	void *exit;
 	void *background;
 	void *wall;
@@ -95,5 +94,7 @@ char	*get_next_line(int fd);
 void	error_message(char *message);
 
 void parser_for_text(t_data *data, char *name);
+
+void pars_textures(t_data *data, char *line, int counter, int path);
 
 #endif

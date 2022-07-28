@@ -34,14 +34,14 @@ int	counter_for_map(char *s, char c)
 
 int	exit_function(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->window);
+	// mlx_destroy_window(data->mlx, data->window);
 	ft_putstr_fd("DELETE THE GAME!\nWork harder!\n", 1);
 	exit(0);
 }
 
 int	win_message(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->window);
+	// mlx_destroy_window(data->mlx, data->window);
 	ft_putstr_fd("You won!!\nCongratulations\n", 1);
 	exit (0);
 }
