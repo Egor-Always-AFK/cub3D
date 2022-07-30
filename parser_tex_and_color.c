@@ -82,7 +82,10 @@ void pars_color(t_data *data, char *line, int counter, int path)
 			j = 0;
 			while (j != 3)
 			{
-				col[j] = line[i];
+				if (line[i] >= 48 && line[i] <= 57)
+					col[j] = line[i];
+				else
+					error_message("fortmat: digit!");
 				j++;
 				i++;
 			}
@@ -114,7 +117,10 @@ void pars_color(t_data *data, char *line, int counter, int path)
 			j = 0;
 			while (j != 3)
 			{
-				col[j] = line[i];
+				if (line[i] >= 48 && line[i] <= 57)
+					col[j] = line[i];
+				else
+					error_message("fortmat: digit!");
 				j++;
 				i++;
 			}
