@@ -125,7 +125,7 @@ void pars_color(t_data *data, char *line, int counter, int path)
 			else
 				data->colors.celling_blue = ft_atoi(col);
 			/*
-			добавить проверку на трехзначность числа(на моменте парсинга char*)
+			добавить проверку на трехзначность числа(на моменте парсинга char*) и вышвыривание букв
 			*/
 			if (data->colors.celling_red >= 256 || data->colors.celling_red < 0)
 				error_message("error\ncolor: 0 >= c <= 255");
@@ -137,7 +137,7 @@ void pars_color(t_data *data, char *line, int counter, int path)
 			i++;
 		}
 	}
-	// printf("red:%d\nblue:%d\ngreen:%d\n", data->colors.floor_red, data->colors.floor_blue, data->colors.floor_green);
+	printf("red:%d\nblue:%d\ngreen:%d\n", data->colors.floor_red, data->colors.floor_blue, data->colors.floor_green);
 }
 
 void pars_textures(t_data *data, char *line, int counter, int path)
@@ -153,7 +153,7 @@ void pars_textures(t_data *data, char *line, int counter, int path)
 	/*
 	как запустить mlx???????????????????
 	*/
-	
+
 	// int fd;
 	// // fd = open(line, O_RDONLY);
 	// // if (fd == -1)
