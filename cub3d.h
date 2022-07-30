@@ -44,12 +44,15 @@ typedef struct s_imgs
 	void *wall;
 } t_imgs;
 
-typedef struct s_player
+typedef struct s_color
 {
-	int pos_x;
-	int pos_y;
-	int collect;
-} t_player;
+	int floor_red;
+	int floor_blue;
+	int floor_green;
+	int celling_red;
+	int celling_blue;
+	int celling_green;
+} t_color;
 
 typedef struct s_data
 {
@@ -60,8 +63,9 @@ typedef struct s_data
 	void *window;
 	t_map *map;
 	t_imgs *imgs;
-	t_player player;
+	t_color colors;
 } t_data;
+
 
 int main(int argc, char **argv);
 
@@ -96,5 +100,7 @@ void	error_message(char *message);
 void parser_for_text(t_data *data, char *name);
 
 void pars_textures(t_data *data, char *line, int counter, int path);
+
+void pars_color(t_data *data, char *line, int counter, int path);
 
 #endif

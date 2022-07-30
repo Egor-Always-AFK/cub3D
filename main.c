@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		error_message("Error!\nFew arguments :c\n");
+	// data.mlx = mlx_init();
 	if (ft_strnstr(argv[1], ".cub", ft_strlen(argv[1])) != NULL)
 	{
 		parser_for_text(&data, argv[1]);

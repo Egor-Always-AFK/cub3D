@@ -35,4 +35,10 @@ void	ft_putnbr_fd(int n, int fd);
 
 char	*ft_strjoin(char *all_text, char *tmp);
 
+int     ft_atoi(char *str);
+
+int     check_space(char c);
+
+int     ft_isdigit(int c);
+
 #endif
