@@ -11,8 +11,10 @@ int main(int argc, char **argv)
 	if (ft_strnstr(argv[1], ".cub", ft_strlen(argv[1])) != NULL)
 	{
 		parser_for_text(&data, argv[1]);
+		printf("f_r:%d\nf_g:%d\nf_b:%d\n", data.colors.floor_red, data.colors.floor_green, data.colors.floor_blue);
+		printf("c_r:%d\nc_g:%d\nc_b:%d\n", data.colors.celling_red, data.colors.celling_green, data.colors.celling_blue);
 	}
 	else
-		error_message("Error!");
+		error_message("Error!map not .cub");
 	return(0);
 }

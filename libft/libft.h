@@ -41,4 +41,14 @@ int     check_space(char c);
 
 int     ft_isdigit(int c);
 
+static char	**free_my_arr_pls(char **arr, int n);
+
+static int	check_size(char const *s, char c);
+
+static char	*my_small_arr(char const *s, char c);
+
+char	**ft_split(char const *s, char c);
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+
 #endif

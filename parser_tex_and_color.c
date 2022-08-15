@@ -14,7 +14,7 @@ void parser_for_text(t_data *data, char *name)
 	if (fd == -1)
 		error_message("Wow i can't open this conf :'c\n");
 	line = get_next_line(fd);
-	while (counter != 5)
+	while (counter != 6)
 	{
 		i = 0;
 		if (count[0] > 1 || count[1] > 1 || count[2] > 1 || count[3] > 1)
@@ -56,7 +56,13 @@ void parser_for_text(t_data *data, char *name)
 				pars_color(data, line, i + 2, 0);
 				count[4] += 1;
 				counter += 1;
-				// printf("\n\n%d\n\n", counter);
+				break;
+			}
+			else if(line[i] == 'C' && line[i + 1] == ' ')
+			{
+				pars_color(data, line, i + 2, 1);
+				count[5] += 1;
+				counter += 1;
 				break;
 			}
 		}
@@ -64,86 +70,78 @@ void parser_for_text(t_data *data, char *name)
 	}
 	if (count[0] != 1 || count[1] != 1 || count[2] != 1 || count[3] != 1)
 		error_message("parsing error!");
+		/*
+		раписать каждую ошибку(когда ошибка кол-ва цвета или текстур)
+		*/
 }
 
 void pars_color(t_data *data, char *line, int counter, int path)
 {
-	int i = counter;
-	int j;
+	char **dst;
+	char *copy;
 	int count = 0;
-	char col[3];
+	int i = 0;
 
+	copy = line;
+	copy[0] = ' ';
 	if (path == 0)
 	{
-		while(line[i] == ' ')
-			i++;
-		while (count != 2)
+		dst = ft_split(copy, ',');
+		while (count <= 2)
 		{
-			j = 0;
-			while (j != 3)
+			while (dst[count][i] != '\0')
 			{
-				if (line[i] >= 48 && line[i] <= 57)
-					col[j] = line[i];
+				if ((dst[count][i] >= 48 && dst[count][i] <= 57) || dst[count][i] == ' ')
+					;
 				else
-					error_message("fortmat: digit!");
-				j++;
+					error_message("format digit!");
+					;
 				i++;
 			}
 			if (count == 0)
-				data->colors.floor_red = ft_atoi(col);
+				data->colors.floor_red = ft_atoi(dst[count]);
 			else if (count == 1)
-				data->colors.floor_green = ft_atoi(col);
+				data->colors.floor_green = ft_atoi(dst[count]);
 			else
-				data->colors.floor_blue = ft_atoi(col);
-			/*
-			добавить проверку на трехзначность числа(на моменте парсинга char*)
-			*/
-			if (data->colors.floor_red >= 256 || data->colors.floor_red < 0)
-				error_message("error\ncolor: 0 >= c <= 255\n");
-			else if (data->colors.floor_green >= 256 || data->colors.floor_green < 0)
-				error_message("error\ncolor: 0 >= c <= 255\n");
-			else if (data->colors.floor_blue >= 256 || data->colors.floor_blue < 0)
-				error_message("error\ncolor: 0 >= c <= 255\n");
+				data->colors.floor_blue = ft_atoi(dst[count]);
 			count++;
-			i++;
 		}
+			if (data->colors.floor_red >= 256 || data->colors.floor_red < 0)
+				error_message("error\nfloor_red_color: 0 >= c <= 255\n");
+			else if (data->colors.floor_green >= 256 || data->colors.floor_green < 0)
+				error_message("error\nfloor_green_color: 0 >= c <= 255\n");
+			else if (data->colors.floor_blue >= 256 || data->colors.floor_blue < 0)
+				error_message("error\nfloor_blue_color: 0 >= c <= 255\n");
 	}
 	else
 	{
-		while (line[i] == ' ')
-			i++;
-		while (count != 2)
+		dst = ft_split(copy, ',');
+		while (count <= 2)
 		{
-			j = 0;
-			while (j != 3)
+			while (dst[count][i] != '\0')
 			{
-				if (line[i] >= 48 && line[i] <= 57)
-					col[j] = line[i];
+				if ((dst[count][i] >= 48 && dst[count][i] <= 57) || dst[count][i] == ' ')
+					;
 				else
-					error_message("fortmat: digit!");
-				j++;
+					error_message("format digit!");
+					;
 				i++;
 			}
 			if (count == 0)
-				data->colors.celling_red = ft_atoi(col);
+				data->colors.celling_red = ft_atoi(dst[count]);
 			else if (count == 1)
-				data->colors.celling_green = ft_atoi(col);
+				data->colors.celling_green = ft_atoi(dst[count]);
 			else
-				data->colors.celling_blue = ft_atoi(col);
-			/*
-			добавить проверку на трехзначность числа(на моменте парсинга char*) и вышвыривание букв
-			*/
-			if (data->colors.celling_red >= 256 || data->colors.celling_red < 0)
-				error_message("error\ncolor: 0 >= c <= 255");
-			else if (data->colors.celling_green >= 256 || data->colors.celling_green < 0)
-				error_message("error\ncolor: 0 >= c <= 255");
-			else if (data->colors.celling_blue >= 256 || data->colors.celling_blue < 0)
-				error_message("error\ncolor: 0 >= c <= 255");
+				data->colors.celling_blue = ft_atoi(dst[count]);
 			count++;
-			i++;
 		}
+		if (data->colors.celling_red >= 256 || data->colors.celling_red < 0)
+			error_message("error\ncelling_red_color: 0 >= c <= 255\n");
+		else if (data->colors.celling_green >= 256 || data->colors.celling_green < 0)
+			error_message("error\ncelling_green_color: 0 >= c <= 255\n");
+		else if (data->colors.celling_blue >= 256 || data->colors.celling_blue < 0)
+			error_message("error\ncelling_blue_color: 0 >= c <= 255\n");
 	}
-	printf("red:%d\nblue:%d\ngreen:%d\n", data->colors.floor_red, data->colors.floor_blue, data->colors.floor_green);
 }
 
 void pars_textures(t_data *data, char *line, int counter, int path)

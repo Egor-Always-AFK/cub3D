@@ -3,7 +3,7 @@ SO ./text/wow.xpm
 WE ./text/wow.xpm
 EA ./text/wow.xpm
 
-F 220,100,0
+F        220,     100,      200
 C 225,30,0
 
 1111111111111111111111111
