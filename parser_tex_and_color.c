@@ -11,6 +11,8 @@ void parser_for_text(t_data *data, char *name)
 	count[1] = 0;
 	count[2] = 0;
 	count[3] = 0;
+	count[4] = 0;
+	count[5] = 0;
 	if (fd == -1)
 		error_message("Wow i can't open this conf :'c\n");
 	line = get_next_line(fd);
@@ -95,7 +97,6 @@ void pars_color(t_data *data, char *line, int counter, int path)
 					;
 				else
 					error_message("format digit!");
-					;
 				i++;
 			}
 			if (count == 0)
@@ -112,6 +113,8 @@ void pars_color(t_data *data, char *line, int counter, int path)
 				error_message("error\nfloor_green_color: 0 >= c <= 255\n");
 			else if (data->colors.floor_blue >= 256 || data->colors.floor_blue < 0)
 				error_message("error\nfloor_blue_color: 0 >= c <= 255\n");
+			// data->map->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
+			 data->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
 	}
 	else
 	{
@@ -120,11 +123,14 @@ void pars_color(t_data *data, char *line, int counter, int path)
 		{
 			while (dst[count][i] != '\0')
 			{
-				if ((dst[count][i] >= 48 && dst[count][i] <= 57) || dst[count][i] == ' ')
+				if ((dst[count][i] >= 48 && dst[count][i] <= 57) || dst[count][i] == ' ' || dst[count][i] == '\n')
 					;
 				else
+				{
+					printf("%d\n\n\n\n\n", dst[count][i]);
 					error_message("format digit!");
 					;
+				}
 				i++;
 			}
 			if (count == 0)
@@ -141,6 +147,8 @@ void pars_color(t_data *data, char *line, int counter, int path)
 			error_message("error\ncelling_green_color: 0 >= c <= 255\n");
 		else if (data->colors.celling_blue >= 256 || data->colors.celling_blue < 0)
 			error_message("error\ncelling_blue_color: 0 >= c <= 255\n");
+		// data->map->ceil = (data->colors.celling_red << 16 | data->colors.celling_green << 8 | data->colors.celling_blue);
+		data->ceil = (data->colors.celling_red << 16 | data->colors.celling_green << 8 | data->colors.celling_blue);
 	}
 }
 
@@ -153,25 +161,14 @@ void pars_textures(t_data *data, char *line, int counter, int path)
 			counter++;
 	if (ft_strnstr(&line[ft_strlen(line) - 5], ".xpm", 5) == NULL)
 		error_message("map is not .xpm\n");
+	int fd;
 
-	/*
-	как запустить mlx???????????????????
-	*/
-
-	// int fd;
-	// // fd = open(line, O_RDONLY);
-	// // if (fd == -1)
-	// // 	error_message("file not exist!\n");
-	// if (path == 0)
-	// 	printf("%s\n\n", line);
-	// 	// data->imgs->textures_north = mlx_xpm_file_to_image(data->mlx, line, &length, &height);
-	// else if (path == 1)
-	// 	printf("%s\n\n", line);
-	// 	// data->imgs->textures_south = mlx_xpm_file_to_image(data->mlx, line, &length, &height);
-	// else if (path == 2)
-	// 	printf("%s\n\n", line);
-	// 	// data->imgs->textures_west = mlx_xpm_file_to_image(data->mlx, line, &length, &height);
-	// else if (path == 3)
-	// 	printf("%s\n\n", line);
-	// 	// data->imgs->textures_east = mlx_xpm_file_to_image(data->mlx, line, &length, &height);
+	if (path == 0)
+		data->imgs->textures_north = mlx_xpm_file_to_image(data->mlx, "./text/cot.xpm", &length, &height);
+	else if (path == 1)
+		data->imgs->textures_south = mlx_xpm_file_to_image(data->mlx, "./text/cot.xpm", &length, &height);
+	else if (path == 2)
+		data->imgs->textures_west = mlx_xpm_file_to_image(data->mlx, "./text/cot.xpm", &length, &height);
+	else if (path == 3)
+		data->imgs->textures_east = mlx_xpm_file_to_image(data->mlx,"./text/cot.xpm", &length, &height);
 }

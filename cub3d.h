@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+# include <math.h>
 
 #   define TRUE 1
 #   define FALSE 0
@@ -24,6 +25,19 @@
 #	define LEFT_KEY 0
 #	define RIGHT_KEY 2
 #	define ESC 53
+# 	define WALL_COLOR 0x000000
+# 	define SPACE_COLOR 0xFFFFFF
+# 	define PLAYER_COLOR 0xFF0000
+# 	define POINT_SIZE 12
+# 	define FOV 0.66
+# 	define SPEED_P 0.6
+# 	define SPEED_R 0.2
+
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}				t_point;
 
 typedef struct s_map
 {
@@ -31,6 +45,10 @@ typedef struct s_map
 	int col;
 	int exit;
 	int collect;
+	// int	ceil;
+	// int	floor;
+	int x_ray;
+	int y_ray;
 } t_map;
 
 typedef struct s_imgs
@@ -54,6 +72,32 @@ typedef struct s_color
 	int celling_green;
 } t_color;
 
+typedef struct s_player {
+	t_point	pos;
+	t_point	dir;
+}				t_player;
+
+
+typedef struct s_ray
+{
+	t_point	dir;
+	t_point	delta;
+	t_point	side;
+	int		i;
+	int		step_x;
+	int		step_y;
+	int		hit;
+}				t_ray;
+
+typedef struct s_wall
+{
+	int		height;
+	int		top;
+	int		tex_x;
+	double	tex_y;
+	double	dist;
+}				t_wall;
+
 typedef struct s_data
 {
 	int length;
@@ -61,15 +105,68 @@ typedef struct s_data
 	int counter;
 	void *mlx;
 	void *window;
+	void *img;
+	char *addr;
+	int	bits_to_color;
+	int bits_to_line;
+	int end;
 	t_map *map;
 	t_imgs *imgs;
 	t_color colors;
+	t_player	plr;
+	t_ray		ray;
+	t_point		plane;
+	t_wall		wall;
+	int	ceil;
+	int	floor;
+
 } t_data;
 
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+void map_shit(t_data *data, char *config);
+
+int	ft_handler_keys(int key, t_data *data);
+
+void	drow_game_two(t_data *data);
+
+void    create_ceil(t_data *data);
+
+void    create_floor(t_data *data);
+
+void    drow_game(t_data *data);
+
+void	ft_free_arr(char **arr);
+
+void	ft_fatal_error(char *msg);
+
+void	ft_free_exit(char *msg, t_data *data);
+
+int	ft_close(t_data *data);
+
+void    init_mlx(t_data *data);
+
+void	ft_move_up_down(int key, t_data *data);
+
+void	ft_move_left_right(int key, t_data *data);
+
+void	ft_rotation(int key, t_data *data);
+
+void	ray_init(t_data *data);
+
+void	ray_run(t_data *data);
+
+void	dist_wall_hit(t_data *data);
+
+void	find_tex_x(t_data *data);
+
+int	ft_find_texel(t_data *data, int x, int y);
+
+void	ft_draw_vert_line(t_data *data);
 
 int main(int argc, char **argv);
 
-void init(t_data *data);
+void init_data(t_data *data);
 
 int lenght_count(int fd);
 
@@ -102,5 +199,11 @@ void parser_for_text(t_data *data, char *name);
 void pars_textures(t_data *data, char *line, int counter, int path);
 
 void pars_color(t_data *data, char *line, int counter, int path);
+
+int	ft_close(t_data *data);
+
+void	ft_draw_point(t_data *data, int color, int x, int y);
+
+
 
 #endif
