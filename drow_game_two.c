@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	ft_draw_point(t_data *data, int color, int x, int y)
+void	draw_point(t_data *data, int color, int x, int y)
 {
 	int	start_x;
 	int	start_y;
@@ -38,14 +38,14 @@ void	drow_game_two(t_data *data)
 			if (data->map->map[i][k] == '0')
 			{
 				color = SPACE_COLOR;
-				ft_draw_point(data, color, k * POINT_SIZE, i * POINT_SIZE);
+				draw_point(data, color, k * POINT_SIZE, i * POINT_SIZE);
 			}
 			if (data->map->map[i][k] == '1')
 			{
 				color = WALL_COLOR;
-				ft_draw_point(data, color, k * POINT_SIZE, i * POINT_SIZE);
+				draw_point(data, color, k * POINT_SIZE, i * POINT_SIZE);
 			}
 		}
 	}
-	ft_draw_point(data, PLAYER_COLOR, (int)data->plr.pos.x * POINT_SIZE, (int)data->plr.pos.y * POINT_SIZE);
+	draw_point(data, PLAYER_COLOR, (int)data->plr.pos.x * POINT_SIZE, (int)data->plr.pos.y * POINT_SIZE);
 }

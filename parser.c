@@ -75,7 +75,7 @@ void parse_input(t_data *data, char **argv)
 	check_border(data);
 }
 
-void check_content(t_data *data)
+void check_contentidk(t_data *data)
 {
 	int i;
 	int player;

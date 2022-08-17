@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	ft_move_up_down(int key, t_data *data)
+void	move_up_down(int key, t_data *data)
 {
 	if (key == UP_KEY)
 	{
@@ -23,7 +23,7 @@ void	ft_move_up_down(int key, t_data *data)
 	drow_game(data);
 }
 
-void	ft_move_left_right(int key, t_data *data)
+void	move_left_right(int key, t_data *data)
 {
 	if (key == RIGHT_KEY)
 	{
@@ -46,7 +46,7 @@ void	ft_move_left_right(int key, t_data *data)
 	drow_game(data);
 }
 
-void	ft_rotation(int key, t_data *data)
+void	rotation(int key, t_data *data)
 {
 	double	old_dirx;
 	double	old_planex;

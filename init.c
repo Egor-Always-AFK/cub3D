@@ -5,8 +5,8 @@ void init_data(t_data *data)
     t_imgs *govno;
 
     govno = malloc(sizeof(t_imgs));
-    // data->map = map;
     data->imgs = govno;
+    free(govno);
     data->mlx = NULL;
     data->window = NULL;
     data->addr = NULL;
@@ -15,19 +15,11 @@ void init_data(t_data *data)
     data->length = 0;
     data->height = 0;
     data->counter = 0;
-    // data->map->map = (char **)malloc(17);
-    // for (int i = 0; i < 3; i++)
-    // {
-    //     data->map->map[i] = (char *)malloc(16);
-    // }
-    // data->map->map = ft_split("111111111111111\n100000000000001\n111111111111111", '\n');
     data->ceil = -1;
     data->floor = -1;
     data->map->col = 0;
     data->map->exit = 0;
     data->map->collect = 0;
-    // data->map->ceil = -1;
-    // data->map->floor = -1;
     data->imgs->textures_east = NULL;
     data->imgs->textures_north = NULL;
     data->imgs->textures_south = NULL;
