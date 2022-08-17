@@ -12,14 +12,14 @@
 #   define TRUE 1
 #   define FALSE 0
 #   define BUFFER_SIZE 10
-#   define IMG_HEIGHT 32
-#   define IMG_LENGHT 32
-#   define WIN_HEIGHT 900
-#   define WIN_LENGHT 900
+// #   define IMG_HEIGHT 32
+// #   define IMG_LENGHT 32
+#   define WIN_HEIGHT 720
+#   define WIN_LENGHT 1280
 #	define UP 1
 #	define DOWN 2
-#	define LEFT 3
-#	define RIGHT 4
+#	define LEFT 12
+#	define RIGHT 14
 #	define UP_KEY 13
 #	define DOWN_KEY 1
 #	define LEFT_KEY 0
@@ -30,7 +30,7 @@
 # 	define PLAYER_COLOR 0xFF0000
 # 	define POINT_SIZE 12
 # 	define FOV 0.66
-# 	define SPEED_P 0.6
+# 	define SPEED_P 0.8
 # 	define SPEED_R 0.2
 
 typedef struct s_point
@@ -45,8 +45,7 @@ typedef struct s_map
 	int col;
 	int exit;
 	int collect;
-	// int	ceil;
-	// int	floor;
+	int	max_y;
 	int x_ray;
 	int y_ray;
 } t_map;
@@ -75,6 +74,7 @@ typedef struct s_color
 typedef struct s_player {
 	t_point	pos;
 	t_point	dir;
+	char	start_dir;
 }				t_player;
 
 
@@ -122,11 +122,7 @@ typedef struct s_data
 
 } t_data;
 
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-
-void map_shit(t_data *data, char *config);
-
-int	ft_handler_keys(int key, t_data *data);
+int	handler_keys(int key, t_data *data);
 
 void	drow_game_two(t_data *data);
 
@@ -136,21 +132,19 @@ void    create_floor(t_data *data);
 
 void    drow_game(t_data *data);
 
-void	ft_free_arr(char **arr);
+void	free_arr(char **arr);
 
-void	ft_fatal_error(char *msg);
+void	fatal_error(char *msg);
 
-void	ft_free_exit(char *msg, t_data *data);
-
-int	ft_close(t_data *data);
+void	free_exit(char *msg, t_data *data);
 
 void    init_mlx(t_data *data);
 
-void	ft_move_up_down(int key, t_data *data);
+void	move_up_down(int key, t_data *data);
 
-void	ft_move_left_right(int key, t_data *data);
+void	move_left_right(int key, t_data *data);
 
-void	ft_rotation(int key, t_data *data);
+void	rotation(int key, t_data *data);
 
 void	ray_init(t_data *data);
 
@@ -160,9 +154,9 @@ void	dist_wall_hit(t_data *data);
 
 void	find_tex_x(t_data *data);
 
-int	ft_find_texel(t_data *data, int x, int y);
+int	find_texel(t_data *data, int x, int y);
 
-void	ft_draw_vert_line(t_data *data);
+void	draw_vert_line(t_data *data);
 
 int main(int argc, char **argv);
 
@@ -174,7 +168,7 @@ int height_count(int fd, int map_lenght);
 
 void parse_input(t_data *data, char **argv);
 
-void check_content(t_data *data);
+void check_contentidk(t_data *data);
 
 void check_border(t_data *data);
 
@@ -200,10 +194,15 @@ void pars_textures(t_data *data, char *line, int counter, int path);
 
 void pars_color(t_data *data, char *line, int counter, int path);
 
+void	draw_point(t_data *data, int color, int x, int y);
+
 int	ft_close(t_data *data);
+// void	put_pixel(t_data *data, int x, int y, int color);
 
-void	ft_draw_point(t_data *data, int color, int x, int y);
+void    set_player_napr_pos(t_data *data);
 
+void map_shit(t_data *data, char *config);
 
+void check_content(t_data *data);
 
 #endif

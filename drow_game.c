@@ -61,7 +61,7 @@ void    drow_game(t_data *data)
 		ray_run(data);
 		dist_wall_hit(data);
 		find_tex_x(data);
-		ft_draw_vert_line(data);
+		draw_vert_line(data);
 		data->ray.i++;
 	}
     drow_game_two(data);

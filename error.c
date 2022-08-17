@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	ft_free_arr(char **arr)
+void	free_arr(char **arr)
 {
 	int	i;
 
@@ -17,7 +17,7 @@ void	ft_free_arr(char **arr)
 	}
 }
 
-void	ft_fatal_error(char *msg)
+void	fatal_error(char *msg)
 {
 	if (!msg)
 		exit(EXIT_FAILURE);
@@ -26,9 +26,9 @@ void	ft_fatal_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_free_exit(char *msg, t_data *data)
+void	free_exit(char *msg, t_data *data)
 {
-	ft_free_arr(data->map->map);
+	free_arr(data->map->map);
 	if (data->imgs->textures_north)
 		free(data->imgs->textures_north);
 	if (data->imgs->textures_south)
@@ -42,13 +42,13 @@ void	ft_free_exit(char *msg, t_data *data)
 	if (data->window)
 		mlx_destroy_window(data->mlx, data->window);
 	if (msg)
-		ft_fatal_error(msg);
+		fatal_error(msg);
 	else
 		exit(EXIT_SUCCESS);
 }
 
 int	ft_close(t_data *data)
 {
-	ft_free_exit(NULL, data);
+	free_exit(NULL, data);
 	return (0);
 }
