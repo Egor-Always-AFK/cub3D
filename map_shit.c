@@ -112,3 +112,8 @@ void check_content(t_data *data)
 	// printf("%d\n", data->plr.pos.y);
 	// printf("%d\n", data->plr.pos.x);
 }
+
+void check_border(t_data *data)
+{
+	
+}

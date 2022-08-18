@@ -31,7 +31,7 @@
 # 	define POINT_SIZE 12
 # 	define FOV 0.66
 # 	define SPEED_P 0.8
-# 	define SPEED_R 0.2
+# 	define SPEED_R 0.4
 
 typedef struct s_point
 {

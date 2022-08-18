@@ -33,19 +33,21 @@ int	find_texel(t_data *data, int x, int y)
 		else
 			tex = data->imgs->textures_north;
 	}
-	return (tex[64 * y + x]);
+	// return (tex[64 * y + x ]);
+	// return((0 << 16 | 0 << 8 | 255));
+	return(1);
 }
 
-// void	put_pixel(t_data *data, int x, int y, int color)
-// {
-// 	char    *put;
+void	put_pixel(t_data *data, int x, int y, int color)
+{
+	char    *put;
 
-// 	if (x >= 0 && x < WIN_LENGHT && y >= 0 && y < WIN_HEIGHT)
-// 	{
-// 		put = data->addr + (y * data->bits_to_line + x * (data->bits_to_color / 8));
-// 		*(unsigned int *)put = color;
-// 	}
-// }
+	if (x >= 0 && x < WIN_LENGHT && y >= 0 && y < WIN_HEIGHT)
+	{
+		put = data->addr + (y * data->bits_to_line + x * (data->bits_to_color / 8));
+		*(unsigned int *)put = color;
+	}
+}
 
 // void	set_direction(t_all *all, char pov, double i, double k)
 // {
@@ -115,12 +117,13 @@ void	draw_vert_line(t_data *data)
 	while (i < data->wall.height)
 	{
 		color = find_texel(data, data->wall.tex_x, (int)data->wall.tex_y);
-		// put_pixel(data, data->ray.i, data->wall.top + i, color);
-        if (data->ray.i >= 0 && data->ray.i < WIN_LENGHT && (data->wall.top + i) >= 0 && (data->wall.top + i) < WIN_HEIGHT)
-	    {
-		    put = data->addr + ((data->wall.top + i) * data->bits_to_line + data->ray.i * (data->bits_to_color / 8));
-		    *(unsigned int *)put = color;
-	    }
+		put_pixel(data, data->ray.i, data->wall.top + i, color);
+		put_pixel(data, data->ray.i, data->wall.top + i + 1, color);
+        // if (data->ray.i >= 0 && data->ray.i < WIN_LENGHT && (data->wall.top + i) >= 0 && (data->wall.top + i) < WIN_HEIGHT)
+	    // {
+		// put = data->addr + ((data->wall.top + i) * data->bits_to_line + data->ray.i * (data->bits_to_color / 8));
+		// *(unsigned int *)put = color;
+	    // }
 		data->wall.tex_y += scale;
 		i++;
 	}
