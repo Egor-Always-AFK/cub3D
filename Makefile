@@ -8,7 +8,7 @@ CFLAGS =  -c -g
 
 HEADER = cub3d.h 
 
-SRCS_LONG = main.c init.c parser_tex_and_color.c parser.c utils.c \
+SRCS_LONG = main.c init.c parser_tex_and_color.c utils.c \
 			help_functions.c get_next_line.c get_next_line_utils.c libft/ft_strlen.c\
 			libft/ft_putstr_fd.c libft/ft_strnstr.c libft/ft_substr.c\
 			libft/ft_calloc.c libft/ft_bzero.c libft/ft_strlcpy.c \

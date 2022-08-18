@@ -1,10 +1,10 @@
-NO ./text/cot.xpm
-SO ./text/cot.xpm
-WE ./text/cot.xpm
-EA ./text/cot.xpm
+NO ./text/wall.xpm
+SO ./text/wall.xpm
+WE ./text/wall.xpm
+EA ./text/wall.xpm
 
-F 220,100,0
-C 225,30,0
+F 255,0,0
+C 255,255,255
 
 1111111111111111111111111
 1000000000110000000000001
