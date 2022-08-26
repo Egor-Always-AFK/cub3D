@@ -16,6 +16,7 @@ void parser_for_text(t_data *data, char *name)
 	if (fd == -1)
 		error_message("Wow i can't open this conf :'c\n");
 	line = get_next_line(fd);
+	// printf("aaaa\n");
 	while (count[6] == 0)
 	{
 		i = 0;
@@ -27,40 +28,44 @@ void parser_for_text(t_data *data, char *name)
 				i++;
 			else if (line[i] == 'N' && line[i + 1] == 'O')
 			{
-				pars_textures(data, line, i + 2, 0);
+				// pars_textures(data, line, i + 2, 0);
+				parse_texture_2(data, &data->imgs->textures_north, line + 2, counter + 2);
 				count[0] += 1;
 				counter += 1;
 				break;
 			}
 			else if (line[i] == 'S' && line[i + 1] == 'O')
 			{
-				pars_textures(data, line, i + 2, 1);
+				// pars_textures(data, line, i + 2, 1);
+				parse_texture_2(data, &data->imgs->textures_south, line + 2, counter + 2);
 				count[1] += 1;
 				counter += 1;
 				break;
 			}
 			else if (line[i] == 'W' && line[i + 1] == 'E')
 			{
-				pars_textures(data, line, i + 2, 2);
+				// pars_textures(data, line, i + 2, 2);
+				parse_texture_2(data, &data->imgs->textures_west, line + 2, counter + 2);
 				count[2] += 1;
 				counter += 1;
 				break;
 			}
-			else if(line[i] == 'E' && line[i + 1] == 'A')
+			else if (line[i] == 'E' && line[i + 1] == 'A')
 			{
-				pars_textures(data, line, i + 2, 3);
+				// pars_textures(data, line, i + 2, 3);
+				parse_texture_2(data, &data->imgs->textures_east, line + 2, counter + 2);
 				count[3] += 1;
 				counter += 1;
 				break;
 			}
-			else if(line[i] == 'F' && line[i + 1] == ' ')
+			else if (line[i] == 'F' && line[i + 1] == ' ')
 			{
 				pars_color(data, line, i + 2, 0);
 				count[4] += 1;
 				counter += 1;
 				break;
 			}
-			else if(line[i] == 'C' && line[i + 1] == ' ')
+			else if (line[i] == 'C' && line[i + 1] == ' ')
 			{
 				pars_color(data, line, i + 2, 1);
 				count[5] += 1;
@@ -77,9 +82,9 @@ void parser_for_text(t_data *data, char *name)
 	}
 	if (count[0] != 1 || count[1] != 1 || count[2] != 1 || count[3] != 1)
 		error_message("parsing error!");
-		/*
-		раписать каждую ошибку(когда ошибка кол-ва цвета или текстур)
-		*/
+	/*
+	раписать каждую ошибку(когда ошибка кол-ва цвета или текстур)
+	*/
 }
 
 void pars_color(t_data *data, char *line, int counter, int path)
@@ -112,14 +117,14 @@ void pars_color(t_data *data, char *line, int counter, int path)
 				data->colors.floor_blue = ft_atoi(dst[count]);
 			count++;
 		}
-			if (data->colors.floor_red >= 256 || data->colors.floor_red < 0)
-				error_message("error\nfloor_red_color: 0 >= c <= 255\n");
-			else if (data->colors.floor_green >= 256 || data->colors.floor_green < 0)
-				error_message("error\nfloor_green_color: 0 >= c <= 255\n");
-			else if (data->colors.floor_blue >= 256 || data->colors.floor_blue < 0)
-				error_message("error\nfloor_blue_color: 0 >= c <= 255\n");
-			// data->map->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
-			 data->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
+		if (data->colors.floor_red >= 256 || data->colors.floor_red < 0)
+			error_message("error\nfloor_red_color: 0 >= c <= 255\n");
+		else if (data->colors.floor_green >= 256 || data->colors.floor_green < 0)
+			error_message("error\nfloor_green_color: 0 >= c <= 255\n");
+		else if (data->colors.floor_blue >= 256 || data->colors.floor_blue < 0)
+			error_message("error\nfloor_blue_color: 0 >= c <= 255\n");
+		// data->map->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
+		data->floor = (data->colors.floor_red << 16 | data->colors.floor_green << 8 | data->colors.floor_blue);
 	}
 	else
 	{
@@ -157,44 +162,118 @@ void pars_color(t_data *data, char *line, int counter, int path)
 	}
 }
 
-void pars_textures(t_data *data, char *line, int counter, int path)
+void	copy(int **addr, void *img)
 {
-	int length = 0;
-	int height = 0;
-	int *adr;
-	int i = 0;
-	if(line[counter] == ' ')
-		while(line[counter] == ' ')
-			counter++;
-	if (ft_strnstr(&line[ft_strlen(line) - 5], ".xpm", 5) == NULL)
-		error_message("map is not .xpm\n");
-	int fd;
-	// printf("%s\n", ft_substr(line, counter, ft_strlen(line) - counter));
+	int	arg[3];
+	int	*tmp;
+	int	i;
 
-	if (path == 0)
+	i = 0;
+	// printf("==%p\n", img);
+	tmp = (int *)mlx_get_data_addr(img, &arg[0], &arg[1], &arg[2]);
+	*addr = (int *)malloc(sizeof(int) * 16384);
+	while (i < 16384)
 	{
-		data->imgs->textures_north = mlx_xpm_file_to_image(data->mlx, ft_substr(line, counter, ft_strlen(line) - counter), &length, &height);
-		// int *tmp = (int *)malloc(sizeof(int) * 4096);
-		// tmp = (int *)mlx_get_data_addr(data->imgs->textures_north, &data->bits_to_color, &data->bits_to_line, &data->end);
- 		// while (i < 4096)
- 		// {
-  		// 	tmp[i] = adr[i];
-  		// 	i++;
- 		// }
-	}
-	else if (path == 1)
-	{
-		data->imgs->textures_south = mlx_xpm_file_to_image(data->mlx, ft_substr(line, counter, ft_strlen(line) - counter), &length, &height);
-		// adr = (int *)mlx_get_data_addr(data->imgs->textures_south, &data->bits_to_color, &data->bits_to_line, &data->end);
-	}
-	else if (path == 2)
-	{
-		data->imgs->textures_west = mlx_xpm_file_to_image(data->mlx, ft_substr(line, counter, ft_strlen(line) - counter), &length, &height);
-		// adr = (int *)mlx_get_data_addr(data->imgs->textures_west, &data->bits_to_color, &data->bits_to_line, &data->end);
-	}
-	else if (path == 3)
-	{
-		data->imgs->textures_east = mlx_xpm_file_to_image(data->mlx, ft_substr(line, counter, ft_strlen(line) - counter), &length, &height);
-		// adr = (int *)mlx_get_data_addr(data->imgs->textures_east, &data->bits_to_color, &data->bits_to_line, &data->end);
+		(*addr)[i] = tmp[i];
+		i++;
 	}
 }
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
+
+char	*isspaces(char *line, int i)
+{
+	while (ft_isspace(*++line))
+		i++;
+	while (line[i])
+		i++;
+	while (ft_isspace(line[i - 1]))
+		i--;
+	if (line[i] != '\0')
+		line[i] = '\0';
+	return (line);
+}
+
+void	parse_texture_2(t_data *data, int **addr, char *line, int i)
+{
+	void	*img;
+	int		arg[2];
+	
+	line = isspaces(line, i);
+	img = mlx_xpm_file_to_image(data->mlx, line, &arg[0], &arg[1]);
+	// if (arg[0] != 64 || arg[1] != 64 || !img)
+	if (!img)
+	{
+		if (img)
+			mlx_destroy_image(data->mlx, img);
+		// free_exit(NULL, data);
+		// error_message("errorrrrrrr\n");
+	}
+	copy(addr, img);
+	mlx_destroy_image(data->mlx, img);
+}
+
+// void pars_textures(t_data *data, char *line, int counter, int path)
+// {
+// 	// int length = 0;
+// 	// int height = 0;
+// 	int *adr;
+// 	// int i = 0;
+// 	printf("_%s\n_", line);
+// 	if (line[counter] == ' ')
+// 		while (line[counter] == ' ')
+// 			counter++;
+// 	if (ft_strnstr(&line[ft_strlen(line) - 5], ".xpm", 5) == NULL)
+// 		error_message("map is not .xpm\n");
+// 	// int fd;
+// 	// printf("%s\n", ft_substr(line, counter, ft_strlen(line) - counter));
+
+// 	if (path == 0)
+// 		parse_texture_2(data, &data->imgs->textures_north, line, counter + 2);
+// 	else if (path == 1)
+// 		parse_texture_2(data, &data->imgs->textures_south, line, counter + 2);
+// 	else if (path == 2)
+// 		parse_texture_2(data, &data->imgs->textures_west, line, counter + 2);
+// 	else if (path == 3)
+// 		parse_texture_2(data, &data->imgs->textures_east, line, counter + 2);
+
+// 	// if (path == 0)
+// 	// {
+// 	// 	line[0] = ' ';
+// 	// 	line[1] = ' ';
+// 	// 	char *tmp = ft_substr(line, counter, ft_strlen(line) - counter);
+// 	// 	// free(tmp[ft_strlen(tmp)]);
+// 	// 	// char *tmp = "./text/wall.xpm";
+// 	// 	// printf("%s\n", tmp);
+// 	// 	data->imgs->textures_north = mlx_xpm_file_to_image(data->mlx, "text/0.xpm", &length, &height);
+// 	// 	// printf("\n\n%p\n\n", data->imgs->textures_north);
+// 	// 	// int *tmp = (int *)malloc(sizeof(int) * 4096);
+// 	// 	// tmp = (int *)mlx_get_data_addr(data->imgs->textures_north, &data->bits_to_color, &data->bits_to_line, &data->end);
+// 	// 	// while (i < 4096)
+// 	// 	// {
+// 	// 	// 	tmp[i] = adr[i];
+// 	// 	// 	i++;
+// 	// 	// }
+// 	// }
+// 	// else if (path == 1)
+// 	// {
+// 	// 	char *tmp = ft_substr(line, counter, ft_strlen(line) - counter);
+// 	// 	data->imgs->textures_south = mlx_xpm_file_to_image(data->mlx, "text/0.xpm", &length, &height);
+// 	// 	// adr = (int *)mlx_get_data_addr(data->imgs->textures_south, &data->bits_to_color, &data->bits_to_line, &data->end);
+// 	// }
+// 	// else if (path == 2)
+// 	// {
+// 	// 	data->imgs->textures_west = mlx_xpm_file_to_image(data->mlx, "text/0.xpm", &length, &height);
+// 	// 	// adr = (int *)mlx_get_data_addr(data->imgs->textures_west, &data->bits_to_color, &data->bits_to_line, &data->end);
+// 	// }
+// 	// else if (path == 3)
+// 	// {
+// 	// 	data->imgs->textures_east = mlx_xpm_file_to_image(data->mlx, "text/0.xpm", &length, &height);
+// 	// 	// adr = (int *)mlx_get_data_addr(data->imgs->textures_east, &data->bits_to_color, &data->bits_to_line, &data->end);
+// 	// }
+// }

@@ -1,7 +1,7 @@
-NO ./text/cot.xpm
-SO ./text/cot.xpm
-WE ./text/cot.xpm
-EA ./text/cot.xpm
+NO ./text/0.xpm
+SO ./text/0.xpm
+WE ./text/0.xpm
+EA ./text/0.xpm
 
 F 255,255,0
 C 0,5,255
