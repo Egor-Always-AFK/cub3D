@@ -146,7 +146,7 @@ void check_border(t_data *data)
 			}
 			else if (data->map->map[i][j] == '0')
 			{
-				if (data->map->map[i - 1][j] == ' ' || data->map->map[i + 1][j] == ' ' || j > ft_strlen(data->map->map[i - 1]) - 1 || data->map->map[i][j + 1] == ' ' || data->map->map[i][j - 1] == ' ' || j > ft_strlen(data->map->map[i + 1]) - 1 || data->map->map[i][j + 1] == '\n')
+				if (data->map->map[i - 1][j] == ' ' || data->map->map[i + 1][j] == ' ' || j > ft_strlen(data->map->map[i - 1]) - 1 || data->map->map[i][j + 1] == ' ' || data->map->map[i][j - 1] == ' ' || j > ft_strlen(data->map->map[i + 1]) - 1 || data->map->map[i][j + 1] == '\n' || data->map->map[i + 1][j + 1] == ' ' || data->map->map[i + 1][j + 1] == '\n' || data->map->map[i + 1][j - 1] == ' ' || data->map->map[i + 1][j - 1] == '\n' || data->map->map[i - 1][j + 1] == ' ' || data->map->map[i - 1][j + 1] == '\n' || data->map->map[i - 1][j - 1] == ' ' || data->map->map[i - 1][j - 1] == '\n')
 					error_message("Error!\nMap must be closed\n");
 			}
 			j++;
