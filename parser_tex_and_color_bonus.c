@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_tex_and_color.c                             :+:      :+:    :+:   */
+/*   parser_tex_and_color_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocapers <ocapers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 14:13:45 by ocapers           #+#    #+#             */
-/*   Updated: 2022/09/16 19:41:59 by ocapers          ###   ########.fr       */
+/*   Updated: 2022/09/16 19:14:11 by ocapers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	skip_spaces(char *line)
 {
@@ -24,18 +24,22 @@ int	skip_spaces(char *line)
 
 void	pars_help_3(t_data *data, char *line, int i, int *count)
 {
+	pars_color_help(data, line, i, count);
 	if (line[i] == '1')
 	{
-		count[7] += 1;
+		count[6] += 1;
+		free(line);
+		return ;
+	}
+	else if (line[i] == 'D' && line[i + 1] == 'R')
+	{
+		count[4] += 1;
+		pars_wall(data, line + 6, &data->walls[4]);
 		free(line);
 		return ;
 	}
 	else if (line[i] == '\n')
 		free(line);
-	else if (line[i] == 'F' || line[i] == 'C')
-		pars_color_help(data, line, i, count);
-	else
-		count[6]++;
 }
 
 int	pars_help_2(t_data *data, char *line, int counter, int i)
@@ -62,6 +66,7 @@ int	pars_help_2(t_data *data, char *line, int counter, int i)
 	{
 		pars_wall(data, line + 6, &data->walls[3]);
 		free(line);
+		pars_anim_wall_xpm(data, counter);
 	}
 	return (1);
 }
@@ -98,17 +103,17 @@ void	pars_help(t_data *data, int *count, int counter, char *line)
 void	parser_for_text(t_data *data, char *name)
 {
 	int		counter;
-	int		count[7];
+	int		count[6];
 	char	*line;
 	int		fd;
 
 	fd = open(name, O_RDONLY);
 	counter = 0;
-	bzero_for_array(count, 8);
+	bzero_for_array(count, 7);
 	if (fd == -1)
-		error_message("Error!\nWow i can't open this conf :'c\n");
+		error_message("Wow i can't open this conf :'c\n", data);
 	line = get_next_line(fd);
-	while (count[7] == 0)
+	while (count[5] == 0)
 	{
 		pars_help(data, count, counter, line);
 		line = get_next_line(fd);
