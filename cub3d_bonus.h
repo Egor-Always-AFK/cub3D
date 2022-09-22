@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   map_parse_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocapers <ocapers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 14:13:45 by ocapers           #+#    #+#             */
-/*   Updated: 2022/09/16 19:04:33 by ocapers          ###   ########.fr       */
+/*   Updated: 2022/09/09 14:12:49 by sdavos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
@@ -146,6 +146,15 @@ typedef struct s_ray
 	int				draw_end;
 }	t_ray;
 
+typedef struct s_anims
+{
+	int		anim_gun;
+	void	*guns_imgs[20];
+	int		x[20];
+	int		y[20];
+	int		anim_wall;
+}	t_anims;
+
 typedef struct s_data
 {
 	int			floor;
@@ -158,6 +167,7 @@ typedef struct s_data
 	t_player	plr;
 	t_ray		*ray;
 	t_keys		key;
+	t_anims		anims;
 	int			mouse;
 	t_pixel		minimap;
 	t_pixel		minimap_2;
@@ -178,6 +188,8 @@ void		set_dir_rot_plane(t_data *data, int i, int j);
 void		pars_wall(t_data *data, char *line, t_imgs *wall);
 
 void		pars_fire_walls(t_data *data, char *line, t_imgs *wall);
+
+void		pars_color(t_data *data, char *line, int counter, int path);
 
 void		move_up_down(t_data *data);
 
@@ -283,13 +295,13 @@ char		*skip_before_new_line(char *all_text);
 
 char		*get_next_line(int fd);
 
-void		error_message(char *message);
+void		error_message(char *message, t_data *data);
 
 void		parser_for_text(t_data *data, char *name);
 
 void		pars_textures(t_data *data, char *line, int counter, int path);
 
-void		pars_color(t_data *data, char *line, int path);
+// void		pars_color(t_data *data, char *line, int path);
 
 void		draw_point(t_data *data, int color, int x, int y);
 

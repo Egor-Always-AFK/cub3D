@@ -19,7 +19,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (s == NULL)
 		return (NULL);
-	if (ft_strlen(s) < start)
+	if ((unsigned int)ft_strlen(s) < start)
 	{
 		trash_dst = malloc(sizeof(char));
 		trash_dst[0] = '\0';
@@ -27,7 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	else
 	{
-		if (start + len > ft_strlen(s))
+		if (start + len > (unsigned int)ft_strlen(s))
 			len = ft_strlen(s) - start;
 		trash_dst = malloc(sizeof(char) * len + 1);
 		if (trash_dst == NULL)
